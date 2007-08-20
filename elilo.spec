@@ -1,6 +1,6 @@
 %define name	elilo
 %define version	3.3a
-%define release	1mdk
+%define release	%mkrel 1
 %define bootdir	/boot/efi/mandrake
 
 Summary:	An ia64 LILO-like kernel loader
