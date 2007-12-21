@@ -14,6 +14,7 @@ Patch1:		elilo-3.3a-devscheme.patch
 Patch2:		elilo-3.3a-localfs.patch
 License:	GPL
 Group:		System/Kernel and hardware
+BuildRoot:	%{_tmppath}/%{name}-root
 BuildRequires:	gnu-efi >= 3.0
 ExclusiveArch:	ia64
 
