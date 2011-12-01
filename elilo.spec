@@ -31,12 +31,12 @@ ELILO is a linux boot loader for EFI-based systems, such as IA-64.
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{bootdir}
-install -m755 elilo.efi $RPM_BUILD_ROOT%{bootdir}/
+rm -rf %{buildroot}
+mkdir -p %{buildroot}%{bootdir}
+install -m755 elilo.efi %{buildroot}%{bootdir}/
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files -n elilo
 %defattr(-,root,root)
