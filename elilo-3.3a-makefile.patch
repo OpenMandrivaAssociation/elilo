@@ -1,0 +1,46 @@
+--- elilo-3.3a/Makefile.makefile	2002-02-20 09:21:05.000000000 +0100
++++ elilo-3.3a/Makefile	2003-05-26 14:58:06.000000000 +0200
+@@ -31,7 +31,7 @@ CRTOBJS       = $(EFICRT0)/crt0-efi-$(AR
+ LDSCRIPT      = $(EFICRT0)/elf_$(ARCH)_efi.lds
+ 
+ LDFLAGS	     += -T $(LDSCRIPT) -shared -Bsymbolic -L$(EFILIB) $(CRTOBJS)
+-LOADLIBES     = -lefi -lgnuefi $(shell $(CC) -print-libgcc-file-name)
++LOADLIBES     = -L/usr/lib -lefi -lgnuefi $(shell $(CC) -print-libgcc-file-name)
+ FORMAT        = efi-app-$(ARCH)
+ 
+ FILESYSTEM    =
+--- elilo-3.3a/Make.defaults.makefile	2002-10-08 20:50:27.000000000 +0200
++++ elilo-3.3a/Make.defaults	2003-05-26 14:59:04.000000000 +0200
+@@ -52,7 +52,7 @@ CONFIG_machspec_netconfig=y
+ 
+ EFIINC	   = /usr/include/efi
+ EFILIB	   = /usr/lib
+-EFICRT0	   = /usr/lib
++EFICRT0	   = /usr/lib/gnuefi
+ 
+ CDIR    := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+ TOPDIR  =
+@@ -93,7 +93,6 @@ endif
+ 
+ ifeq ($(ARCH),ia64)
+   prefix	= 
+-  prefix	= /opt/gcc3.1/bin/
+   CC		= $(prefix)gcc
+   AS		= $(prefix)as
+   LD		= $(prefix)ld
+@@ -114,8 +113,7 @@ CFLAGS += -mfixed-range=f32-f127
+ else
+  ifeq ($(ARCH),ia32)
+   prefix	= 
+-  prefix	= 
+-  CC		= $(prefix)gcc3
++  CC		= $(prefix)gcc
+   AS		= $(prefix)as
+   LD		= $(prefix)ld
+   AR		= $(prefix)ar
+@@ -123,3 +121,5 @@ else
+   OBJCOPY	= $(prefix)objcopy
+  endif
+ endif
++
++CFLAGS += $(shell if $(CC) -fno-merge-constants -S -o /dev/null -xc /dev/null >/dev/null 2>&1; then echo "-fno-merge-constants"; fi)

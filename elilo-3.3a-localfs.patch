@@ -1,0 +1,14 @@
+--- elilo-3.3a/glue_localfs.c.localfs	2002-08-17 02:59:11.000000000 +0200
++++ elilo-3.3a/glue_localfs.c	2003-05-26 14:56:32.000000000 +0200
+@@ -64,8 +64,11 @@ set_default_path(CHAR16 *sptr)
+ 	dptr = localfs_default_path;
+ 
+ 	while (len-- && *sptr) {
++		
+ 		if (sptr[0] == L'/' && sptr[1] == L'.' && sptr[2] == L'\\')
+ 			sptr += 2;
++		if (sptr[0] == L'/')
++			sptr[0] = L'\\';
+ 		if (sptr[0] == L'\\' && sep == dptr-1)
+ 			sptr++;
+ 		else {
